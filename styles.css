@@ -172,6 +172,98 @@ button {
   box-shadow: 0 18px 60px rgba(98, 38, 4, 0.18);
 }
 
+.instagram-preview {
+  grid-column: 1 / -1;
+  width: min(520px, 100%);
+  justify-self: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.46);
+  border-radius: 20px;
+  background: rgba(255, 249, 243, 0.52);
+  box-shadow: 0 16px 44px rgba(98, 38, 4, 0.14);
+  backdrop-filter: blur(18px);
+}
+
+.instagram-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.instagram-link strong,
+.instagram-link small {
+  display: block;
+}
+
+.instagram-link small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.instagram-icon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 32% 100%, #fed373 0 22%, transparent 23%),
+    radial-gradient(circle at 15% 15%, #fff 0 3px, transparent 4px),
+    linear-gradient(135deg, #515bd4, #8134af 35%, #dd2a7b 62%, #f58529);
+  position: relative;
+  box-shadow: 0 12px 26px rgba(129, 52, 175, 0.2);
+}
+
+.instagram-icon::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 3px solid #fff;
+  border-radius: 10px;
+}
+
+.instagram-icon::after {
+  content: "";
+  position: absolute;
+  inset: 17px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+}
+
+.instagram-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 42px);
+  gap: 6px;
+}
+
+.instagram-grid span {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background:
+    linear-gradient(135deg, rgba(33, 26, 22, 0.78), rgba(189, 80, 17, 0.72)),
+    var(--orange);
+  border: 1px solid rgba(255, 255, 255, 0.56);
+}
+
+.instagram-grid span:nth-child(2) {
+  background:
+    linear-gradient(135deg, rgba(244, 123, 32, 0.82), rgba(255, 249, 243, 0.72)),
+    var(--orange);
+}
+
+.instagram-grid span:nth-child(3) {
+  background:
+    linear-gradient(135deg, rgba(255, 249, 243, 0.8), rgba(33, 26, 22, 0.7)),
+    var(--orange);
+}
+
 .device-tabs,
 .auth-tabs {
   display: grid;
@@ -722,6 +814,10 @@ select:focus {
     min-height: 420px;
   }
 
+  .instagram-preview {
+    grid-template-columns: 1fr;
+  }
+
   h1 {
     max-width: none;
     font-size: 4.1rem;
@@ -758,6 +854,15 @@ select:focus {
   .auth-card {
     align-self: stretch;
     order: 2;
+  }
+
+  .instagram-preview {
+    order: 3;
+    border-radius: 18px;
+  }
+
+  .instagram-grid {
+    justify-content: center;
   }
 
   .app-shell .workspace {
