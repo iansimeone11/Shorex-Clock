@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shorex Clock</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="auth-shell" id="authShell">
+      <section class="auth-hero" aria-labelledby="authTitle">
+        <div class="brand auth-brand">
+          <img src="assets/shorex-logo.png" alt="Shorexplorations" />
+          <div>
+            <p class="eyebrow">Shorexplorations</p>
+            <h1 id="authTitle">Control horario</h1>
+          </div>
+        </div>
+        <p class="auth-copy">Registro simple de entrada y salida para el equipo.</p>
+      </section>
+
+      <section class="auth-card" aria-label="Acceso">
+        <input class="auth-toggle" id="authLoginToggle" type="radio" name="authMode" checked />
+        <input class="auth-toggle" id="authRegisterToggle" type="radio" name="authMode" />
+
+        <div class="auth-tabs" role="tablist" aria-label="Acceso">
+          <label class="auth-tab" id="loginModeButton" for="authLoginToggle">Iniciar sesion</label>
+          <label class="auth-tab" id="registerModeButton" for="authRegisterToggle">Registro</label>
+        </div>
+
+        <form class="auth-form" id="loginForm" action="javascript:void(0)">
+          <div class="section-title">
+            <h2>Bienvenido</h2>
+            <p>Entra con tu PIN</p>
+          </div>
+          <label class="field">
+            <span>Usuario</span>
+            <input id="loginUser" type="text" placeholder="Escribi tu usuario" autocomplete="username" />
+          </label>
+          <label class="field">
+            <span>PIN</span>
+            <input id="loginPin" type="password" inputmode="numeric" placeholder="4 digitos" autocomplete="current-password" />
+          </label>
+          <button class="primary-action" id="loginButton" type="button">Entrar</button>
+          <button class="text-action" id="adminLoginButton" type="button">Entrar como admin</button>
+          <p class="form-message" id="loginMessage"></p>
+        </form>
+
+        <form class="auth-form" id="registerForm" action="javascript:void(0)">
+          <div class="section-title">
+            <h2>Crear usuario</h2>
+            <p>Alta rapida</p>
+          </div>
+          <label class="field">
+            <span>Nombre y apellido</span>
+            <input id="registerName" type="text" placeholder="Ej: Maria Lopez" autocomplete="name" />
+          </label>
+          <label class="field">
+            <span>PIN</span>
+            <input id="registerPin" type="password" inputmode="numeric" placeholder="Minimo 4 digitos" autocomplete="new-password" />
+          </label>
+          <button class="primary-action" id="registerButton" type="button">Crear y entrar</button>
+          <p class="form-message" id="registerMessage"></p>
+        </form>
+      </section>
+    </main>
+
+    <main class="app-shell is-hidden" id="appShell">
+      <section class="hero-panel" aria-labelledby="app-title">
+        <div class="brand">
+          <img src="assets/shorex-logo.png" alt="Shorexplorations" />
+          <div>
+            <p class="eyebrow">Shorexplorations</p>
+            <h1 id="app-title">Clock in / Clock out</h1>
+          </div>
+        </div>
+
+        <div class="clock-card">
+          <p class="today" id="todayLabel"></p>
+          <p class="time" id="timeLabel">--:--</p>
+          <p class="status-pill" id="statusLabel">Elegí tu usuario</p>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="Control de asistencia">
+        <div class="session-bar">
+          <strong id="currentUserLabel">Sesion</strong>
+          <img class="session-logo" src="assets/shorex-logo.png" alt="Shorexplorations" />
+          <button class="text-action" id="logoutButton" type="button">Salir</button>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Vistas">
+          <button class="tab is-active" id="employeeTab" type="button">Empleado</button>
+          <button class="tab" id="adminTab" type="button">Admin</button>
+        </div>
+
+        <section class="view is-active" id="employeeView" aria-label="Vista de empleado">
+          <div class="panel-grid">
+            <article class="panel">
+              <div class="section-title">
+                <h2>Fichaje</h2>
+                <p>Entrada y salida del día</p>
+              </div>
+
+              <label class="field">
+                <span>Persona</span>
+                <select id="personSelect"></select>
+              </label>
+
+              <form class="inline-form" id="newPersonForm">
+                <label class="field grow">
+                  <span>Agregar persona</span>
+                  <input id="newPersonName" type="text" placeholder="Nombre y apellido" autocomplete="off" />
+                </label>
+                <button class="icon-button" type="submit" aria-label="Agregar persona">+</button>
+              </form>
+
+              <div class="fichaje-details">
+                <label class="field">
+                  <span>Ubicacion</span>
+                  <select id="locationSelect">
+                    <option value="">Seleccionar ubicacion</option>
+                    <option value="Ezeiza">Ezeiza</option>
+                    <option value="Terminal De Cruceros">Terminal De Cruceros</option>
+                    <option value="Hospitality Desk en Hotel">Hospitality Desk en Hotel</option>
+                    <option value="Aeroparque">Aeroparque</option>
+                  </select>
+                </label>
+
+                <label class="field">
+                  <span>Cliente</span>
+                  <select id="clientSelect">
+                    <option value="">Seleccionar cliente</option>
+                    <option value="HAL">HAL</option>
+                    <option value="PCL">PCL</option>
+                    <option value="Seabourn">Seabourn</option>
+                    <option value="AIDA">AIDA</option>
+                    <option value="Costa">Costa</option>
+                    <option value="CUNARD">CUNARD</option>
+                  </select>
+                </label>
+              </div>
+
+              <button class="primary-action" id="clockButton" type="button">Clock in</button>
+              <p class="helper" id="sessionHelper">Seleccioná tu nombre para empezar.</p>
+            </article>
+
+            <article class="panel">
+              <div class="section-title">
+                <h2>Mis horas</h2>
+                <p>Últimos movimientos</p>
+              </div>
+              <div class="metric-row">
+                <div>
+                  <span>Hoy</span>
+                  <strong id="todayHours">0 h</strong>
+                </div>
+                <div>
+                  <span>Semana</span>
+                  <strong id="weekHours">0 h</strong>
+                </div>
+              </div>
+              <div class="history-list" id="employeeHistory"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="adminView" aria-label="Vista de administrador">
+          <div class="admin-toolbar">
+            <label class="field">
+              <span>Desde</span>
+              <input id="fromDate" type="date" />
+            </label>
+            <label class="field">
+              <span>Hasta</span>
+              <input id="toDate" type="date" />
+            </label>
+            <button class="secondary-action" id="exportButton" type="button">Exportar CSV</button>
+            <button class="danger-action" id="clearButton" type="button">Limpiar registros</button>
+          </div>
+
+          <div class="summary-grid" id="summaryGrid"></div>
+
+          <article class="panel full-width">
+            <div class="section-title">
+              <h2>Tarifas por hora</h2>
+              <p>Sirven para estimar pagos</p>
+            </div>
+            <div class="rates-list" id="ratesList"></div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <div class="confirm-overlay is-hidden" id="confirmOverlay" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <section class="confirm-dialog">
+        <p class="eyebrow">Confirmacion</p>
+        <h2 id="confirmTitle">¿Está seguro?</h2>
+        <p class="confirm-copy" id="confirmCopy"></p>
+        <div class="confirm-actions">
+          <button class="secondary-action" id="cancelClockButton" type="button">Cancelar</button>
+          <button class="primary-action" id="confirmClockButton" type="button">Confirmar</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
