@@ -23,12 +23,14 @@ body {
     linear-gradient(145deg, rgba(255, 184, 98, 0.95), rgba(244, 123, 32, 0.98) 46%, rgba(211, 83, 17, 0.96)),
     var(--orange);
   color: var(--ink);
+  text-align: center;
 }
 
 button,
 input,
 select {
   font: inherit;
+  text-align: center;
 }
 
 button {
@@ -54,6 +56,44 @@ button {
   grid-template-columns: 1.1fr 0.9fr;
   gap: 18px;
   align-items: stretch;
+}
+
+.app-mode-mobile .auth-shell,
+.app-mode-mobile .app-shell {
+  width: min(430px, calc(100% - 20px));
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.app-mode-mobile .auth-shell,
+.app-mode-mobile .app-shell {
+  margin: 10px auto;
+}
+
+.app-mode-mobile .app-shell .workspace {
+  order: 1;
+}
+
+.app-mode-mobile .app-shell .hero-panel {
+  order: 2;
+  min-height: 0;
+}
+
+.app-mode-mobile .panel-grid,
+.app-mode-mobile .fichaje-details,
+.app-mode-mobile .admin-toolbar,
+.app-mode-mobile .summary-grid {
+  grid-template-columns: 1fr;
+}
+
+.app-mode-desktop .auth-shell {
+  width: min(1040px, calc(100% - 32px));
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.app-mode-desktop .app-shell {
+  width: min(1180px, calc(100% - 32px));
+  grid-template-columns: 0.9fr 1.35fr;
 }
 
 .is-hidden {
@@ -116,6 +156,7 @@ button {
   box-shadow: 0 18px 60px rgba(98, 38, 4, 0.18);
 }
 
+.device-tabs,
 .auth-tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -127,12 +168,17 @@ button {
   border: 1px solid var(--line);
 }
 
+.device-tabs {
+  margin-bottom: 12px;
+}
+
 .auth-toggle {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
+.device-tab,
 .auth-tab {
   display: inline-flex;
   align-items: center;
@@ -146,6 +192,11 @@ button {
   cursor: pointer;
 }
 
+.device-tab {
+  border: 0;
+}
+
+.device-tab.is-active,
 #authLoginToggle:checked ~ .auth-tabs #loginModeButton,
 #authRegisterToggle:checked ~ .auth-tabs #registerModeButton,
 .auth-tab.is-active {
@@ -209,8 +260,10 @@ button {
 
 .brand {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 18px;
+  text-align: center;
 }
 
 .brand img {
@@ -241,6 +294,7 @@ h1 {
   max-width: 11ch;
   font-size: 5.4rem;
   line-height: 0.92;
+  margin-inline: auto;
 }
 
 h2 {
@@ -272,6 +326,7 @@ h2 {
   max-width: 100%;
   min-height: 34px;
   align-items: center;
+  justify-content: center;
   margin: 18px 0 0;
   padding: 8px 12px;
   border-radius: 999px;
@@ -290,6 +345,7 @@ h2 {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  text-align: center;
   min-height: 42px;
   margin-bottom: 10px;
   padding: 0 8px;
@@ -297,6 +353,10 @@ h2 {
 
 .session-bar .text-action {
   justify-self: end;
+}
+
+.session-bar strong {
+  justify-self: start;
 }
 
 .session-logo {
@@ -353,16 +413,18 @@ h2 {
 
 .section-title {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
-  align-items: start;
+  align-items: center;
   margin-bottom: 18px;
+  text-align: center;
 }
 
 .field {
   display: grid;
   gap: 7px;
   margin-bottom: 13px;
+  justify-items: center;
 }
 
 .field span {
@@ -530,6 +592,7 @@ select:focus {
   grid-template-columns: 1fr auto;
   gap: 12px;
   align-items: center;
+  justify-items: center;
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
 }
@@ -565,7 +628,7 @@ select:focus {
 
 .summary-card dl {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
   gap: 8px;
   margin: 0;
 }
@@ -585,6 +648,43 @@ select:focus {
 
 .rate-row input {
   width: 130px;
+}
+
+.app-mode-mobile .hero-panel,
+.app-mode-mobile .workspace,
+.app-mode-mobile .auth-hero,
+.app-mode-mobile .auth-card {
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.app-mode-mobile .auth-hero {
+  min-height: 210px;
+  order: 1;
+}
+
+.app-mode-mobile .auth-card {
+  align-self: stretch;
+  order: 2;
+}
+
+.app-mode-mobile .brand {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.app-mode-mobile h1 {
+  max-width: none;
+  font-size: 2.65rem;
+  line-height: 0.96;
+}
+
+.app-mode-mobile .time {
+  font-size: 3.25rem;
+}
+
+.app-mode-mobile .fichaje-details select {
+  display: none;
 }
 
 @media (max-width: 900px) {

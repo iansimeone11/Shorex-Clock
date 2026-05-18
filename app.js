@@ -1,5 +1,6 @@
 const STORAGE_KEY = "shorex-clock-data-v1";
 const SESSION_KEY = "shorex-clock-session-v1";
+const MODE_KEY = "shorex-clock-device-mode-v1";
 const ADMIN_PIN = "1234";
 const memoryStore = {};
 const localStore = getStorage("localStorage");
@@ -74,6 +75,8 @@ const els = {
   registerMessage: document.querySelector("#registerMessage"),
   authLoginToggle: document.querySelector("#authLoginToggle"),
   authRegisterToggle: document.querySelector("#authRegisterToggle"),
+  mobileModeButton: document.querySelector("#mobileModeButton"),
+  desktopModeButton: document.querySelector("#desktopModeButton"),
   adminLoginButton: document.querySelector("#adminLoginButton"),
   currentUserLabel: document.querySelector("#currentUserLabel"),
   logoutButton: document.querySelector("#logoutButton"),
@@ -109,6 +112,7 @@ const els = {
 
 let pendingClockAction = null;
 let remoteApi = null;
+let deviceMode = storageGet(localStore, MODE_KEY) || "mobile";
 
 function loadState() {
   const raw = storageGet(localStore, STORAGE_KEY);
@@ -645,8 +649,19 @@ function switchAuthMode(mode) {
   els.registerMessage.textContent = "";
 }
 
+function setDeviceMode(mode) {
+  deviceMode = mode === "desktop" ? "desktop" : "mobile";
+  document.body.classList.toggle("app-mode-desktop", deviceMode === "desktop");
+  document.body.classList.toggle("app-mode-mobile", deviceMode === "mobile");
+  els.mobileModeButton.classList.toggle("is-active", deviceMode === "mobile");
+  els.desktopModeButton.classList.toggle("is-active", deviceMode === "desktop");
+  storageSet(localStore, MODE_KEY, deviceMode);
+}
+
 els.loginModeButton.addEventListener("click", () => switchAuthMode("login"));
 els.registerModeButton.addEventListener("click", () => switchAuthMode("register"));
+els.mobileModeButton.addEventListener("click", () => setDeviceMode("mobile"));
+els.desktopModeButton.addEventListener("click", () => setDeviceMode("desktop"));
 
 async function handleLogin(event) {
   event.preventDefault();
@@ -867,6 +882,7 @@ els.ratesList.addEventListener("input", (event) => {
 });
 
 async function initializeApp() {
+  setDeviceMode(deviceMode);
   setDefaultDateRange();
   renderClock();
   renderAll();
