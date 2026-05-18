@@ -87,6 +87,8 @@ const els = {
   personSelect: document.querySelector("#personSelect"),
   locationSelect: document.querySelector("#locationSelect"),
   clientSelect: document.querySelector("#clientSelect"),
+  locationButtons: document.querySelector("#locationButtons"),
+  clientButtons: document.querySelector("#clientButtons"),
   newPersonForm: document.querySelector("#newPersonForm"),
   newPersonName: document.querySelector("#newPersonName"),
   clockButton: document.querySelector("#clockButton"),
@@ -404,6 +406,7 @@ function renderEmployee() {
   els.clockButton.disabled = !person;
   els.locationSelect.disabled = Boolean(active);
   els.clientSelect.disabled = Boolean(active);
+  syncChoiceButtons();
   els.personSelect.disabled = session?.role === "employee";
   els.newPersonForm.classList.toggle("is-hidden", session?.role === "employee" || session?.source === "supabase");
   els.clockButton.textContent = active ? "Clock out" : "Clock in";
@@ -435,6 +438,21 @@ function renderEmployee() {
       <strong>${formatHours(shiftHours(shift))}</strong>
     `;
     els.employeeHistory.appendChild(item);
+  });
+}
+
+function syncChoiceButtons() {
+  const active = selectedPersonId ? activeShift(selectedPersonId) : null;
+  const disableChoices = Boolean(active);
+
+  els.locationButtons.querySelectorAll("[data-location]").forEach((button) => {
+    button.classList.toggle("is-selected", button.dataset.location === els.locationSelect.value);
+    button.disabled = disableChoices;
+  });
+
+  els.clientButtons.querySelectorAll("[data-client]").forEach((button) => {
+    button.classList.toggle("is-selected", button.dataset.client === els.clientSelect.value);
+    button.disabled = disableChoices;
   });
 }
 
@@ -765,6 +783,25 @@ els.adminTab.addEventListener("click", () => switchView("admin"));
 els.personSelect.addEventListener("change", (event) => {
   selectedPersonId = event.target.value;
   renderAll();
+});
+
+els.locationSelect.addEventListener("change", syncChoiceButtons);
+els.clientSelect.addEventListener("change", syncChoiceButtons);
+
+els.locationButtons.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-location]");
+  if (!button || button.disabled) return;
+
+  els.locationSelect.value = button.dataset.location;
+  syncChoiceButtons();
+});
+
+els.clientButtons.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-client]");
+  if (!button || button.disabled) return;
+
+  els.clientSelect.value = button.dataset.client;
+  syncChoiceButtons();
 });
 
 els.newPersonForm.addEventListener("submit", (event) => {

@@ -401,6 +401,38 @@ select:focus {
   gap: 10px;
 }
 
+.choice-buttons {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.choice-buttons.compact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.choice-buttons button {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  font-weight: 800;
+  text-align: center;
+}
+
+.choice-buttons button.is-selected {
+  background: var(--ink);
+  color: #fff8ef;
+  border-color: var(--ink);
+}
+
+.choice-buttons button:disabled {
+  cursor: not-allowed;
+  opacity: 0.54;
+}
+
 .grow {
   flex: 1;
 }
@@ -714,6 +746,18 @@ select:focus {
   select {
     min-height: 52px;
     border-radius: 11px;
+  }
+
+  .fichaje-details select {
+    display: none;
+  }
+
+  .choice-buttons {
+    margin-top: 0;
+  }
+
+  .choice-buttons button {
+    min-height: 48px;
   }
 
   .inline-form {
