@@ -80,17 +80,15 @@ const els = {
   todayLabel: document.querySelector("#todayLabel"),
   timeLabel: document.querySelector("#timeLabel"),
   statusLabel: document.querySelector("#statusLabel"),
+  viewTabs: document.querySelector("#viewTabs"),
   employeeTab: document.querySelector("#employeeTab"),
   adminTab: document.querySelector("#adminTab"),
   employeeView: document.querySelector("#employeeView"),
   adminView: document.querySelector("#adminView"),
-  personSelect: document.querySelector("#personSelect"),
   locationSelect: document.querySelector("#locationSelect"),
   clientSelect: document.querySelector("#clientSelect"),
   locationButtons: document.querySelector("#locationButtons"),
   clientButtons: document.querySelector("#clientButtons"),
-  newPersonForm: document.querySelector("#newPersonForm"),
-  newPersonName: document.querySelector("#newPersonName"),
   clockButton: document.querySelector("#clockButton"),
   sessionHelper: document.querySelector("#sessionHelper"),
   todayHours: document.querySelector("#todayHours"),
@@ -382,18 +380,9 @@ function renderClock() {
 }
 
 function renderPeople() {
-  els.personSelect.innerHTML = "";
-  state.people.forEach((person) => {
-    const option = document.createElement("option");
-    option.value = person.id;
-    option.textContent = person.name;
-    els.personSelect.appendChild(option);
-  });
-
   if (!state.people.some((person) => person.id === selectedPersonId)) {
     selectedPersonId = state.people[0]?.id || "";
   }
-  els.personSelect.value = selectedPersonId;
 }
 
 function renderEmployee() {
@@ -407,8 +396,6 @@ function renderEmployee() {
   els.locationSelect.disabled = Boolean(active);
   els.clientSelect.disabled = Boolean(active);
   syncChoiceButtons();
-  els.personSelect.disabled = session?.role === "employee";
-  els.newPersonForm.classList.toggle("is-hidden", session?.role === "employee" || session?.source === "supabase");
   els.clockButton.textContent = active ? "Clock out" : "Clock in";
   els.statusLabel.textContent = active ? `${person.name} está trabajando` : person ? `${person.name} está fuera` : "Elegí tu usuario";
   els.sessionHelper.textContent = active
@@ -466,13 +453,16 @@ function renderSession() {
   const person = state.people.find((item) => item.id === session.personId);
   if (session.role === "admin") {
     els.currentUserLabel.textContent = "Bienvenido Admin!";
+    els.viewTabs.classList.remove("is-hidden");
+    els.employeeTab.classList.add("is-hidden");
     els.adminTab.classList.remove("is-hidden");
+    switchView("admin");
     return;
   }
 
   selectedPersonId = person?.id || selectedPersonId;
-  els.personSelect.value = selectedPersonId;
   els.currentUserLabel.textContent = person ? welcomeLabel(person.name) : "Bienvenido!";
+  els.viewTabs.classList.add("is-hidden");
   els.adminTab.classList.add("is-hidden");
   switchView("employee");
 }
@@ -780,11 +770,6 @@ els.logoutButton.addEventListener("click", () => {
 els.employeeTab.addEventListener("click", () => switchView("employee"));
 els.adminTab.addEventListener("click", () => switchView("admin"));
 
-els.personSelect.addEventListener("change", (event) => {
-  selectedPersonId = event.target.value;
-  renderAll();
-});
-
 els.locationSelect.addEventListener("change", syncChoiceButtons);
 els.clientSelect.addEventListener("change", syncChoiceButtons);
 
@@ -802,19 +787,6 @@ els.clientButtons.addEventListener("click", (event) => {
 
   els.clientSelect.value = button.dataset.client;
   syncChoiceButtons();
-});
-
-els.newPersonForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const name = els.newPersonName.value.trim();
-  if (!name) return;
-
-  const person = { id: createId(), name, rate: 0, pin: "1234" };
-  state.people.push(person);
-  selectedPersonId = person.id;
-  els.newPersonName.value = "";
-  saveState();
-  renderAll();
 });
 
 els.clockButton.addEventListener("click", () => {

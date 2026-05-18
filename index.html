@@ -89,7 +89,7 @@
           <button class="text-action" id="logoutButton" type="button">Salir</button>
         </div>
 
-        <div class="tabs" role="tablist" aria-label="Vistas">
+        <div class="tabs is-hidden" id="viewTabs" role="tablist" aria-label="Vistas">
           <button class="tab is-active" id="employeeTab" type="button">Empleado</button>
           <button class="tab" id="adminTab" type="button">Admin</button>
         </div>
@@ -101,19 +101,6 @@
                 <h2>Fichaje</h2>
                 <p>Entrada y salida del día</p>
               </div>
-
-              <label class="field">
-                <span>Persona</span>
-                <select id="personSelect"></select>
-              </label>
-
-              <form class="inline-form" id="newPersonForm">
-                <label class="field grow">
-                  <span>Agregar persona</span>
-                  <input id="newPersonName" type="text" placeholder="Nombre y apellido" autocomplete="off" />
-                </label>
-                <button class="icon-button" type="submit" aria-label="Agregar persona">+</button>
-              </form>
 
               <div class="fichaje-details">
                 <label class="field">
